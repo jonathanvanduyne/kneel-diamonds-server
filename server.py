@@ -43,13 +43,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         """
         (resource, _id, _) = self.parse_url(self.path)
 
-        if resource in METHODS_MAPPER:
-            if _id is not None:
-                response = METHODS_MAPPER[resource]("retrieve", _id)  # Call the retrieve function
-            else:
-                response = METHODS_MAPPER[resource]("get", None)  # Call the get_all function
+        if _id is not None:
+            response = retrieve(resource, _id)  # Call the retrieve function
         else:
-            response = None
+            response = get_all(resource)  # Call the get_all function
 
         if response is not None:
             self._set_headers(200)
